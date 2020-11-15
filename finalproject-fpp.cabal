@@ -1,0 +1,62 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 9b9a3b833b43f443462fe7e2b1019d206d3ae9c277be436a58e554cf3ecf4e4c
+
+name:           finalproject-fpp
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/JAhimaz/BMI-calculator-haskell#readme>
+homepage:       https://github.com/JAhimaz/BMI-calculator-haskell#readme
+bug-reports:    https://github.com/JAhimaz/BMI-calculator-haskell/issues
+author:         Joshua Daveston Ahimaz
+maintainer:     example@example.com
+copyright:      2020 Joshua Ahimaz
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/JAhimaz/BMI-calculator-haskell
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_finalproject_fpp
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable finalproject-fpp-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_finalproject_fpp
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , finalproject-fpp
+  default-language: Haskell2010
+
+test-suite finalproject-fpp-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_finalproject_fpp
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , finalproject-fpp
+  default-language: Haskell2010
