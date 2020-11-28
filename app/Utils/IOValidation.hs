@@ -1,7 +1,12 @@
 module Utils.IOValidation where
 
-test :: IO()
-test = putStrLn "Testing"
+isMember n [] = False
+isMember n (x:xs)
+    | n == x = True
+    | otherwise = isMember n xs
+
+clear = putStr "\ESC[2J"
+
 
 {-
 
