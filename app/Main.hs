@@ -1,7 +1,7 @@
 module Main where
 
 import Lib
-import Utils.IOValidation
+import Utils.MenuExtras
 import Data.Maybe
 
 
@@ -9,6 +9,7 @@ main :: IO ()
 main = menuRecursion
 
 -- Menu Code Prompt
+menu :: IO String
 menu = do
     putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
     putStrLn "║                        >>> BMI Calculator App <<<                          ║"
@@ -18,12 +19,12 @@ menu = do
     putStrLn "║                                                                            ║"
     putStrLn "║ [3] Exit                                                                   ║"
     putStrLn "║                                                                            ║"
-    putStrLn "║ Please select one of the following choices ~~~                             ║"
+    putStrLn "║             ~~~ Please select one of the following choices ~~~             ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
     getLine
 
--- Choices for Menu
--- menuSelection :: String -> IO ()
+
+menuSelection :: String -> IO ()
 menuSelection choice =
     case choice of
         "1" -> putStrLn "Choice 1"
@@ -31,15 +32,11 @@ menuSelection choice =
         "3" -> exitMenu
         other -> badChoice other
 
-
 -- Recursive menu
 menuRecursion :: IO ()
 menuRecursion =  menu >>= menuSelection
 
--- Exit Menu
-exitMenu :: IO ()
-exitMenu = putStrLn "See ya!"
-
+badChoice :: String -> IO ()
 badChoice x = do
     clear
     putStrLn ("\n" ++ x ++ " Is Not A Valid Choice")
