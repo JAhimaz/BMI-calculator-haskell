@@ -33,6 +33,17 @@
   (major1) == 0 && (major2) == 4 && (minor) <= 18)
 #endif /* MIN_VERSION_sqlite_simple */
 
+/* package time-1.9.3 */
+#ifndef VERSION_time
+#define VERSION_time "1.9.3"
+#endif /* VERSION_time */
+#ifndef MIN_VERSION_time
+#define MIN_VERSION_time(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  9 || \
+  (major1) == 1 && (major2) == 9 && (minor) <= 3)
+#endif /* MIN_VERSION_time */
+
 /* tool gcc-9.2.0 */
 #ifndef TOOL_VERSION_gcc
 #define TOOL_VERSION_gcc "9.2.0"

@@ -1,8 +1,12 @@
 module BMICalculator where
 
+import Data.Maybe
+import Data.Time.Clock
+import Data.Time.Calendar
+
 -- DATA TYPE DECLARATIONS
 
-data BMIRecord = BMIRecord Int String Float Float Float
+data BMIRecord = BMIRecord Int String Float Float Float UTCTime
 -- BMIRecord Age Name BMI Weight Height 
 
 data BMI = SeverelyUnderweight
@@ -34,7 +38,7 @@ bmi n
 
 bmiCalc weight height = (weight / ((height/100)^2))
 
-readBMIProfile (BMIRecord a n b w h) = do
+readBMIEntry (BMIRecord a n b w h d) = do
 
     let bmiType = bmi b
 
@@ -46,7 +50,8 @@ readBMIProfile (BMIRecord a n b w h) = do
     putStrLn ("║ Weight: " ++ (show w) ++ "KG")                                             
     putStrLn ("║ BMI Reading: " ++ (show b))                                                                 
     putStrLn ("║ BMI Type: " ++ (show bmiType))                                                                   
-    putStrLn "║ "                                                                                  
+    putStrLn "║ "            
+    putStrLn ("║ Time of Reading: " ++ (show d))                                                                        
     putStrLn "╚════════════════════════════════════════════════════════════════════════════\n\n\n"
 
 
