@@ -1,4 +1,4 @@
-module MenuExtras where
+module Utils.MenuExtras where
 
 import Control.Concurrent
 

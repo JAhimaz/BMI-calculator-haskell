@@ -1,7 +1,7 @@
 module Main where
 
-import MenuExtras
-import Validation
+import Utils.MenuExtras
+import Utils.Validation
 import Data.Maybe
 import BMICalculator
 
@@ -81,7 +81,7 @@ calculateBMI = do
     age <- getParameter "your Age: " validNumber
     let bmiValue = bmiCalc (read weight) (read height)
     let bmiType = bmi bmiValue
-    -- let thisBMIProfile = BMIRecord age name weight height
+    let thisBMIProfile = BMIRecord (read age) name (read weight) (read height)
     -- BMIRecord Age Name BMI Weight Height 
 
     -- Profile Print
@@ -95,10 +95,7 @@ calculateBMI = do
     putStrLn ("║ BMI Reading: " ++ (show bmiValue))                                                                 
     putStrLn ("║ BMI Type: " ++ (show bmiType))                                                                   
     putStrLn "║ "                                                                                  
-    putStrLn "╚════════════════════════════════════════════════════════════════════════════"
-
-
-
+    putStrLn "╚════════════════════════════════════════════════════════════════════════════\n\n\n"
 
 -- End of BMI Menu Code Prompt
 

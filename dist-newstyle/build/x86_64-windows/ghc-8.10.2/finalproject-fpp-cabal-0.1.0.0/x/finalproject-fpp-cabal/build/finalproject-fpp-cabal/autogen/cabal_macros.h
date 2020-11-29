@@ -22,6 +22,17 @@
   (major1) == 4 && (major2) == 14 && (minor) <= 1)
 #endif /* MIN_VERSION_base */
 
+/* package sqlite-simple-0.4.18.0 */
+#ifndef VERSION_sqlite_simple
+#define VERSION_sqlite_simple "0.4.18.0"
+#endif /* VERSION_sqlite_simple */
+#ifndef MIN_VERSION_sqlite_simple
+#define MIN_VERSION_sqlite_simple(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  4 || \
+  (major1) == 0 && (major2) == 4 && (minor) <= 18)
+#endif /* MIN_VERSION_sqlite_simple */
+
 /* tool gcc-9.2.0 */
 #ifndef TOOL_VERSION_gcc
 #define TOOL_VERSION_gcc "9.2.0"
