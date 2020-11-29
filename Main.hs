@@ -1,8 +1,7 @@
 module Main where
 
-import Lib
-import Utils.MenuExtras
-import Utils.Validation
+import MenuExtras
+import Validation
 import Data.Maybe
 import BMICalculator
 
@@ -10,7 +9,9 @@ main :: IO ()
 main = mainMenuRecursion
 
 -- DATA TYPE DECLARATIONS
-data BMIRecord = BMI Float | Height Float | Weight Float | Age Int | Name String
+
+data BMIRecord = BMIRecord Int String Float Float Float
+-- BMIRecord Age Name BMI Weight Height 
 
 data BMI = SeverelyUnderweight
          | Underweight
@@ -80,6 +81,8 @@ calculateBMI = do
     age <- getParameter "your Age: " validNumber
     let bmiValue = bmiCalc (read weight) (read height)
     let bmiType = bmi bmiValue
+    -- let thisBMIProfile = BMIRecord age name weight height
+    -- BMIRecord Age Name BMI Weight Height 
 
     -- Profile Print
     clear

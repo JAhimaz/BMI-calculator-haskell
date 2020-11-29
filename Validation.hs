@@ -1,4 +1,4 @@
-module Utils.Validation where
+module Validation where
 
 import Data.Char (isDigit)
 

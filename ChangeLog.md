@@ -1,3 +1,5 @@
-# Changelog for finalproject-fpp
+# Revision history for finalproject-fpp-cabal
 
-## Unreleased changes
+## 0.1.0.0 -- YYYY-mm-dd
+
+* First version. Released on an unsuspecting world.
