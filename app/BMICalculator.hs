@@ -1,5 +1,8 @@
 module BMICalculator where
 
+
+
+
 {-
 
     BMI CALCULATOR APP HASKELL ASSIGNMENT

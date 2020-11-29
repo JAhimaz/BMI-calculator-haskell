@@ -1,5 +1,7 @@
 module Utils.MenuExtras where
 
+import Control.Concurrent
+
 -- Clears the console for visual clarity
 clear = putStr "\ESC[2J"
 
@@ -7,9 +9,12 @@ clear = putStr "\ESC[2J"
 exitMenu :: IO ()
 exitMenu = do
     clear
+    putStrLn "Exiting Program..."
+    threadDelay 2000000
+    clear
     putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
     putStrLn "║                                                                            ║"
-    putStrLn "║                     ~~ THANKS FOR USING THE PROGRAM ~~                     ║"
+    putStrLn "║                  ~~ THANKS FOR USING THE BMI CALCULATOR ~~                 ║"
     putStrLn "║                      Created by Joshua Daveston Ahimaz                     ║"
     putStrLn "║                                  16102543                                  ║"
     putStrLn "║                                                                            ║"
@@ -17,7 +22,6 @@ exitMenu = do
     putStrLn "║                         PRG2214 | Sunway University                        ║"
     putStrLn "║                                                                            ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
-
 
 
 {-
