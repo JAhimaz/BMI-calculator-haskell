@@ -23,10 +23,6 @@ exitMenu = do
     putStrLn "║                                                                            ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1455707fdfdb7a4e208f4fee3ff746c73122c268
 {-
 
     BMI CALCULATOR APP HASKELL ASSIGNMENT

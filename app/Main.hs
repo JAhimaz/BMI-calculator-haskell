@@ -10,8 +10,33 @@ main :: IO ()
 main = mainMenuRecursion
 
 -- DATA TYPE DECLARATIONS
-data BMI = BMI Float | Height Float | Weight Float | Age Int | Name String
+data BMIRecord = BMI Float | Height Float | Weight Float | Age Int | Name String
 
+data BMI = SeverelyUnderweight
+         | Underweight
+         | Normal
+         | Overweight
+         | Obese1
+         | Obese2
+         | Obese3
+
+instance Show BMI where
+  show SeverelyUnderweight = "Severely underweight"
+  show Underweight         = "Underweight"
+  show Normal              = "Normal"
+  show Overweight          = "Overweight"
+  show Obese1              = "Obese (Class I)"
+  show Obese2              = "Obese (Class II)"
+  show Obese3              = "Obese (Class III)"
+
+bmi n
+  | n <= 16.5 = SeverelyUnderweight
+  | n <= 18.5 = Underweight
+  | n <= 25.0 = Normal
+  | n <= 30.1 = Overweight
+  | n <= 35.0 = Obese1
+  | n <= 40.0 = Obese2
+  | otherwise = Obese3
 --
 
 -- Main Menu Code Prompt
@@ -46,7 +71,9 @@ calculateBMI = do
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝\n"
     height <- getParameter "your Height (CM):" validNumber
     weight <- getParameter "your Weight (KG):" validNumber
-    putStrLn ("Your Current Stats ::\nHeight: " ++ height ++ "CM\nWeight: " ++ weight ++ "KG\n")
+    let bmiValue = bmiCalc (read weight) (read height)
+    putStrLn ("Your Current Stats ::\nHeight: " ++ height ++ "CM\nWeight: " ++ weight ++ "KG\nBMI: " ++ (show bmiValue))
+
 
 
 

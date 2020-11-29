@@ -1,6 +1,6 @@
 module BMICalculator where
 
-
+bmiCalc weight height = (weight / ((height/100)^2))
 
 
 {-
