@@ -69,10 +69,30 @@ calculateBMI = do
     putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
     putStrLn "║                       >>> Calculate BMI (METRIC) <<<                       ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝\n"
+    clear
     height <- getParameter "your Height (CM):" validNumber
+    clear
     weight <- getParameter "your Weight (KG):" validNumber
+    clear
+    putStrLn "Please enter your Name:"
+    name <- getLine
+    clear
+    age <- getParameter "your Age: " validNumber
     let bmiValue = bmiCalc (read weight) (read height)
-    putStrLn ("Your Current Stats ::\nHeight: " ++ height ++ "CM\nWeight: " ++ weight ++ "KG\nBMI: " ++ (show bmiValue))
+    let bmiType = bmi bmiValue
+
+    -- Profile Print
+    clear
+    putStrLn "╔════════════════════════════════════════════════════════════════════════════"
+    putStrLn ("║ " ++ name ++ "'s BMI Profile")
+    putStrLn ("║ Age: " ++ age)   
+    putStrLn "║ "                                                                         
+    putStrLn ("║ Height: " ++ height ++ "CM")                                                
+    putStrLn ("║ Weight: " ++ weight ++ "KG")                                             
+    putStrLn ("║ BMI Reading: " ++ (show bmiValue))                                                                 
+    putStrLn ("║ BMI Type: " ++ (show bmiType))                                                                   
+    putStrLn "║ "                                                                                  
+    putStrLn "╚════════════════════════════════════════════════════════════════════════════"
 
 
 
