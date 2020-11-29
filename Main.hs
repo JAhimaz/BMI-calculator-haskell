@@ -8,37 +8,7 @@ import BMICalculator
 main :: IO ()
 main = mainMenuRecursion
 
--- DATA TYPE DECLARATIONS
 
-data BMIRecord = BMIRecord Int String Float Float Float
--- BMIRecord Age Name BMI Weight Height 
-
-data BMI = SeverelyUnderweight
-         | Underweight
-         | Normal
-         | Overweight
-         | Obese1
-         | Obese2
-         | Obese3
-
-instance Show BMI where
-  show SeverelyUnderweight = "Severely underweight"
-  show Underweight         = "Underweight"
-  show Normal              = "Normal"
-  show Overweight          = "Overweight"
-  show Obese1              = "Obese (Class I)"
-  show Obese2              = "Obese (Class II)"
-  show Obese3              = "Obese (Class III)"
-
-bmi n
-  | n <= 16.5 = SeverelyUnderweight
-  | n <= 18.5 = Underweight
-  | n <= 25.0 = Normal
-  | n <= 30.1 = Overweight
-  | n <= 35.0 = Obese1
-  | n <= 40.0 = Obese2
-  | otherwise = Obese3
---
 
 -- Main Menu Code Prompt
 menu :: IO String
@@ -71,31 +41,21 @@ calculateBMI = do
     putStrLn "║                       >>> Calculate BMI (METRIC) <<<                       ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝\n"
     clear
-    height <- getParameter "your Height (CM):" validNumber
-    clear
-    weight <- getParameter "your Weight (KG):" validNumber
-    clear
     putStrLn "Please enter your Name:"
     name <- getLine
     clear
     age <- getParameter "your Age: " validNumber
+    clear
+    height <- getParameter "your Height (CM):" validNumber
+    clear
+    weight <- getParameter "your Weight (KG):" validNumber
     let bmiValue = bmiCalc (read weight) (read height)
-    let bmiType = bmi bmiValue
-    let thisBMIProfile = BMIRecord (read age) name (read weight) (read height)
+    let thisBMIProfile = BMIRecord (read age) name bmiValue (read weight) (read height)
     -- BMIRecord Age Name BMI Weight Height 
 
     -- Profile Print
     clear
-    putStrLn "╔════════════════════════════════════════════════════════════════════════════"
-    putStrLn ("║ " ++ name ++ "'s BMI Profile")
-    putStrLn ("║ Age: " ++ age)   
-    putStrLn "║ "                                                                         
-    putStrLn ("║ Height: " ++ height ++ "CM")                                                
-    putStrLn ("║ Weight: " ++ weight ++ "KG")                                             
-    putStrLn ("║ BMI Reading: " ++ (show bmiValue))                                                                 
-    putStrLn ("║ BMI Type: " ++ (show bmiType))                                                                   
-    putStrLn "║ "                                                                                  
-    putStrLn "╚════════════════════════════════════════════════════════════════════════════\n\n\n"
+    readBMIProfile thisBMIProfile
 
 -- End of BMI Menu Code Prompt
 
@@ -105,7 +65,7 @@ mainMenuRecursion :: IO ()
 mainMenuRecursion =  menu >>= menuSelection
 
 
--- End of Menu Recursions
+-- Invalid Choices for Menu
 
 badChoice :: IO f -> [Char] -> IO f -- Higher order function
 badChoice f x = do
