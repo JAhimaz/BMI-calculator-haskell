@@ -1,20 +1,23 @@
 module Main where
   
 -- Package Imports
-import Data.Maybe
-import Data.Char
-import Data.Time.Clock
-import Data.Time.Calendar
-import Control.Concurrent
+import Data.Maybe ()
+import Data.Char ( toUpper )
+import Data.Time.Clock ( getCurrentTime )
+import Data.Time.Calendar ()
+import Control.Concurrent ()
 -- Module Imports
-import Utils.MenuExtras
+import Utils.MenuExtras ( clear, exitMenu )
 import Utils.Validation
+    ( getParameter, validString, validNumber, validGender )
+import DB.Datatypes ()
 import BMICalculator
+    ( BMIRecord(BMIRecord), bmiCalc, readBMIEntry, round1dp )
 -- Database Imports
 {-# LANGUAGE GADTs, TypeFamilies, TemplateHaskell, QuasiQuotes, FlexibleInstances, StandaloneDeriving #-}
 import Control.Monad.IO.Class (liftIO)
-import Database.Groundhog.TH
-import Database.Groundhog.Sqlite
+import Database.Groundhog.TH ()
+import Database.Groundhog.Sqlite ()
 
 
 main :: IO ()

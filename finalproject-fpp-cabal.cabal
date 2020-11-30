@@ -11,8 +11,7 @@ executable finalproject-fpp-cabal
     Utils.MenuExtras
     , Utils.Validation
     , BMICalculator
-
-
+    , DB.Datatypes
   build-depends: 
     base ^>=4.14.1.0
     , groundhog-sqlite
