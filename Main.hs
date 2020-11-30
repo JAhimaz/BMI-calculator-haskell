@@ -1,36 +1,21 @@
 module Main where
   
-{-# LANGUAGE OverloadedStrings #-}
-
 -- Package Imports
 import Data.Maybe
+import Data.Char
 import Data.Time.Clock
 import Data.Time.Calendar
+import Control.Concurrent
 -- Module Imports
 import Utils.MenuExtras
 import Utils.Validation
 import BMICalculator
--- Database Imports
-import Control.Applicative
-import Database.SQLite.Simple
-import Database.SQLite.Simple.FromRow
-import Control.Concurrent
+
 
 main :: IO ()
 main = setupProgram
 
--- data TestField = TestField Int String deriving (Show)
-
--- instance FromRow TestField where
---   fromRow = TestField <$> field <*> field
-
 setupProgram = do
-  -- conn <- open "test.db"
-  -- execute conn "INSERT INTO test (str) VALUES (?)"
-  --   (Only ("test string 2" :: String))
-  -- r <- query_ conn "SELECT * from test" :: IO [TestField]
-  -- mapM_ print r
-  -- close conn
   mainMenuRecursion
 
 -- Main Menu Code Prompt
@@ -64,20 +49,24 @@ calculateBMI = do
     putStrLn "║                       >>> Calculate BMI (METRIC) <<<                       ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝\n"
     clear
-    putStrLn "Please enter your Name:"
-    name <- getLine
+    firstName <- getParameter "your First Name: " validString
+    clear
+    lastName <- getParameter "your Last Name: " validString
     clear
     age <- getParameter "your Age: " validNumber
+    clear
+    gInput <- getParameter "your Gender ( M | F | O ): " validGender
     clear
     height <- getParameter "your Height (CM):" validNumber
     clear
     weight <- getParameter "your Weight (KG):" validNumber
     -- None Input
     date <- getCurrentTime 
+    let fullName = firstName ++ " " ++ lastName
+    let gender = map toUpper gInput
     --
-    let bmiValue = bmiCalc (read weight) (read height)
-    let thisBMIEntry = BMIRecord (read age) name bmiValue (read weight) (read height) date
-  
+    let bmiValue = round1dp (bmiCalc (read weight) (read height))
+    let thisBMIEntry = BMIRecord (read age) fullName gender bmiValue (read weight) (read height) date
     -- BMIRecord Age Name BMI Weight Height 
 
     -- Profile Print
@@ -99,6 +88,7 @@ badChoice f x = do
     clear
     putStrLn ("\n" ++ x ++ " Is Not A Valid Choice")
     f
+
 
 {-
 

@@ -1,6 +1,6 @@
 module Utils.Validation where
 
-import Data.Char (isDigit)
+import Data.Char (isDigit, isSpace, isAlpha, isNumber)
 
 getParameter label valid = loop
   where
@@ -13,14 +13,17 @@ getParameter label valid = loop
           putStrLn $ "\nInvalid Value\n"
           loop
 
-validNumber x = do
-    isNumber x
+-- validString :: [Char] -> Bool
+-- validString x = not (null (dropWhile isSpace x))
 
-isNumber :: String -> Bool
-isNumber ""  = False
-isNumber "." = False
-isNumber xs  =
-  case dropWhile isDigit xs of
-    ""       -> True
-    ('.':ys) -> all isDigit ys
-    _        -> False
+validString :: Foldable t => t Char -> Bool
+validString x = (all isAlpha x) && not (all isSpace x)
+
+validNumber :: Foldable t => t Char -> Bool
+validNumber x = all isNumber x
+
+validGender x
+  | x == "M" || x == "m" = True
+  | x == "F" || x == "f" = True
+  | x == "O" || x == "o" = True
+  | otherwise = False

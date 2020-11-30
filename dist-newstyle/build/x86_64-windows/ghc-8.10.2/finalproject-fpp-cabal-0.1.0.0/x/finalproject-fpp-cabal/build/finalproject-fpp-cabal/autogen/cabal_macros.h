@@ -22,16 +22,16 @@
   (major1) == 4 && (major2) == 14 && (minor) <= 1)
 #endif /* MIN_VERSION_base */
 
-/* package sqlite-simple-0.4.18.0 */
-#ifndef VERSION_sqlite_simple
-#define VERSION_sqlite_simple "0.4.18.0"
-#endif /* VERSION_sqlite_simple */
-#ifndef MIN_VERSION_sqlite_simple
-#define MIN_VERSION_sqlite_simple(major1,major2,minor) (\
+/* package groundhog-sqlite-0.11.0 */
+#ifndef VERSION_groundhog_sqlite
+#define VERSION_groundhog_sqlite "0.11.0"
+#endif /* VERSION_groundhog_sqlite */
+#ifndef MIN_VERSION_groundhog_sqlite
+#define MIN_VERSION_groundhog_sqlite(major1,major2,minor) (\
   (major1) <  0 || \
-  (major1) == 0 && (major2) <  4 || \
-  (major1) == 0 && (major2) == 4 && (minor) <= 18)
-#endif /* MIN_VERSION_sqlite_simple */
+  (major1) == 0 && (major2) <  11 || \
+  (major1) == 0 && (major2) == 11 && (minor) <= 0)
+#endif /* MIN_VERSION_groundhog_sqlite */
 
 /* package time-1.9.3 */
 #ifndef VERSION_time

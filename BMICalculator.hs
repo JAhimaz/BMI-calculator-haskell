@@ -6,8 +6,8 @@ import Data.Time.Calendar
 
 -- DATA TYPE DECLARATIONS
 
-data BMIRecord = BMIRecord Int String Float Float Float UTCTime
--- BMIRecord Age Name BMI Weight Height 
+data BMIRecord = BMIRecord Int String String Double Double Double UTCTime
+-- BMIRecord Age Name Gender BMI Weight Height 
 
 data BMI = SeverelyUnderweight
          | Underweight
@@ -26,6 +26,7 @@ instance Show BMI where
   show Obese2              = "Obese (Class II)"
   show Obese3              = "Obese (Class III)"
 
+bmi :: (Ord a, Fractional a) => a -> BMI
 bmi n
   | n <= 16.5 = SeverelyUnderweight
   | n <= 18.5 = Underweight
@@ -34,25 +35,37 @@ bmi n
   | n <= 35.0 = Obese1
   | n <= 40.0 = Obese2
   | otherwise = Obese3
---
 
+_gender :: [Char] -> [Char]
+_gender n
+  | n == "M" = "Male"
+  | n == "F" = "Female"
+  | n == "O" = "Others"
+  | otherwise = "Invalid Gender"
+
+round1dp :: Double -> Double
+round1dp x = fromIntegral (round $ x * 1e2) / 1e2
+
+bmiCalc :: Fractional a => a -> a -> a
 bmiCalc weight height = (weight / ((height/100)^2))
 
-readBMIEntry (BMIRecord a n b w h d) = do
+readBMIEntry :: BMIRecord -> IO ()
+readBMIEntry (BMIRecord a n g b w h d) = do
+  let bmiType = bmi b
+  let gender = _gender g
 
-    let bmiType = bmi b
-
-    putStrLn "╔════════════════════════════════════════════════════════════════════════════"
-    putStrLn ("║ " ++ n ++ "'s BMI Profile")
-    putStrLn ("║ Age: " ++ (show a))
-    putStrLn "║ "                                                                         
-    putStrLn ("║ Height: " ++ (show h) ++ "CM")                                                
-    putStrLn ("║ Weight: " ++ (show w) ++ "KG")                                             
-    putStrLn ("║ BMI Reading: " ++ (show b))                                                                 
-    putStrLn ("║ BMI Type: " ++ (show bmiType))                                                                   
-    putStrLn "║ "            
-    putStrLn ("║ Time of Reading: " ++ (show d))                                                                        
-    putStrLn "╚════════════════════════════════════════════════════════════════════════════\n\n\n"
+  putStrLn "╔════════════════════════════════════════════════════════════════════════════"
+  putStrLn ("║ " ++ n ++ "'s BMI Profile")
+  putStrLn ("║ Age: " ++ (show a))
+  putStrLn ("║ Gender: " ++ gender)
+  putStrLn "║ "                                                                         
+  putStrLn ("║ Height: " ++ (show h) ++ "CM")                                                
+  putStrLn ("║ Weight: " ++ (show w) ++ "KG")                                             
+  putStrLn ("║ BMI Reading: " ++ (show b))                                                                 
+  putStrLn ("║ BMI Type: " ++ (show bmiType))                                                                   
+  putStrLn "║ "            
+  putStrLn ("║ Time of Reading: " ++ (show d))                                                                        
+  putStrLn "╚════════════════════════════════════════════════════════════════════════════\n\n\n"
 
 
 {-
