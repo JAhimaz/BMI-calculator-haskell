@@ -2,6 +2,7 @@ module Utils.Validation where
 
 import Data.Char (isDigit, isSpace, isAlpha, isNumber)
 
+getParameter :: [Char] -> (String -> Bool) -> IO String
 getParameter label valid = loop
   where
     loop = do
@@ -22,6 +23,7 @@ validString x = (all isAlpha x) && not (all isSpace x)
 validNumber :: Foldable t => t Char -> Bool
 validNumber x = all isNumber x
 
+validGender :: [Char] -> Bool
 validGender x
   | x == "M" || x == "m" = True
   | x == "F" || x == "f" = True

@@ -33,6 +33,17 @@
   (major1) == 0 && (major2) == 11 && (minor) <= 0)
 #endif /* MIN_VERSION_groundhog_sqlite */
 
+/* package groundhog-th-0.11 */
+#ifndef VERSION_groundhog_th
+#define VERSION_groundhog_th "0.11"
+#endif /* VERSION_groundhog_th */
+#ifndef MIN_VERSION_groundhog_th
+#define MIN_VERSION_groundhog_th(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  11 || \
+  (major1) == 0 && (major2) == 11 && (minor) <= 0)
+#endif /* MIN_VERSION_groundhog_th */
+
 /* package time-1.9.3 */
 #ifndef VERSION_time
 #define VERSION_time "1.9.3"
@@ -120,17 +131,6 @@
   (major1) == 8 && (major2) <  10 || \
   (major1) == 8 && (major2) == 10 && (minor) <= 2)
 #endif /* MIN_TOOL_VERSION_runghc */
-
-/* tool strip-2.32 */
-#ifndef TOOL_VERSION_strip
-#define TOOL_VERSION_strip "2.32"
-#endif /* TOOL_VERSION_strip */
-#ifndef MIN_TOOL_VERSION_strip
-#define MIN_TOOL_VERSION_strip(major1,major2,minor) (\
-  (major1) <  2 || \
-  (major1) == 2 && (major2) <  32 || \
-  (major1) == 2 && (major2) == 32 && (minor) <= 0)
-#endif /* MIN_TOOL_VERSION_strip */
 
 #ifndef CURRENT_COMPONENT_ID
 #define CURRENT_COMPONENT_ID "finalproject-fpp-cabal-0.1.0.0-inplace-finalproject-fpp-cabal"

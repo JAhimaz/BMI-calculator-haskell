@@ -10,6 +10,11 @@ import Control.Concurrent
 import Utils.MenuExtras
 import Utils.Validation
 import BMICalculator
+-- Database Imports
+{-# LANGUAGE GADTs, TypeFamilies, TemplateHaskell, QuasiQuotes, FlexibleInstances, StandaloneDeriving #-}
+import Control.Monad.IO.Class (liftIO)
+import Database.Groundhog.TH
+import Database.Groundhog.Sqlite
 
 
 main :: IO ()
@@ -33,6 +38,7 @@ menu = do
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
     getLine
 
+-- Main Menu Choices
 menuSelection :: String -> IO ()
 menuSelection choice =
     case choice of
@@ -42,8 +48,7 @@ menuSelection choice =
         other -> badChoice mainMenuRecursion other
 
 -- BMI Menu Code Prompt
-
--- calculateBMI :: IO String
+calculateBMI :: IO ()
 calculateBMI = do
     putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
     putStrLn "║                       >>> Calculate BMI (METRIC) <<<                       ║"
@@ -73,16 +78,12 @@ calculateBMI = do
     clear
     readBMIEntry thisBMIEntry
 
--- End of BMI Menu Code Prompt
-
-
 -- Menu Recursions
 mainMenuRecursion :: IO ()
 mainMenuRecursion =  menu >>= menuSelection
 
 
 -- Invalid Choices for Menu
-
 badChoice :: IO f -> [Char] -> IO f -- Higher order function
 badChoice f x = do
     clear
