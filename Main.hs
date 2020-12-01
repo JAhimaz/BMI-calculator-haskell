@@ -46,7 +46,7 @@ menuSelection :: String -> IO ()
 menuSelection choice =
     case choice of
         "1" -> calculateBMI
-        "2" -> putStrLn "Choice 2"
+        "2" -> testRetrieve
         "0" -> exitMenu
         other -> badChoice mainMenuRecursion other
 
@@ -72,13 +72,16 @@ calculateBMI = do
     date <- getCurrentTime 
     let fullName = firstName ++ " " ++ lastName
     let gender = map toUpper gInput
-    let id = 1
     --
     let bmiValue = round1dp (bmiCalc (read weight) (read height))
-    let thisBMIEntry = BMIRecord id (read age) fullName gender bmiValue (read weight) (read height) date
+
     conn <- open "bmiapp.db"
     execute conn "INSERT INTO entries (age, fullName, gender, bmi, weight, height, time) VALUES (?, ?, ?, ?, ?, ?, ?)" (BMIEntry (read age) fullName gender bmiValue (read weight) (read height) (show date))
+    id <- query conn "SELECT id from entries WHERE time = ?" (Only (show date :: String)) :: IO [Only Int]
     close conn
+
+    let thisBMIEntry = BMIRecord (fromOnly (head id)) (read age) fullName gender bmiValue (read weight) (read height) date
+
     -- BMIRecord Age Name BMI Weight Height 
 
     -- Profile Print
@@ -92,6 +95,17 @@ calculateBMI = do
 -- Menu Recursions
 mainMenuRecursion :: IO ()
 mainMenuRecursion =  menu >>= menuSelection
+
+-- Menu Choice 2 (Retrieving Entries & Searching)
+testRetrieve = do
+
+    conn <- open "bmiapp.db"
+    entries <- query_ conn "SELECT age, fullName, gender, bmi, weight, height, time from entries" :: IO [BMIEntry]
+    entriesID <- query_ conn "SELECT id from entries" :: IO [BMIId]
+    let entriesWID = zip entriesID entries
+    close conn
+
+    mapM_ print entriesWID
 
 
 -- Invalid Choices for Menu
