@@ -69,6 +69,8 @@ readBMIEntry (BMIRecord id a n g b w h d) = do
   putStrLn "╚════════════════════════════════════════════════════════════════════════════\n\n\n"
 
 
+
+
 {-
 
     BMI CALCULATOR APP HASKELL ASSIGNMENT

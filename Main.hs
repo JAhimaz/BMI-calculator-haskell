@@ -51,6 +51,7 @@ menuSelection choice =
         other -> badChoice mainMenuRecursion other
 
 -- BMI Menu Code Prompt
+
 calculateBMI :: IO ()
 calculateBMI = do
     putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
@@ -82,8 +83,6 @@ calculateBMI = do
 
     let thisBMIEntry = BMIRecord (fromOnly (head id)) (read age) fullName gender bmiValue (read weight) (read height) date
 
-    -- BMIRecord Age Name BMI Weight Height 
-
     -- Profile Print
     clear
     readBMIEntry thisBMIEntry
@@ -98,15 +97,13 @@ mainMenuRecursion =  menu >>= menuSelection
 
 -- Menu Choice 2 (Retrieving Entries & Searching)
 testRetrieve = do
-
+    clear
     conn <- open "bmiapp.db"
     entries <- query_ conn "SELECT age, fullName, gender, bmi, weight, height, time from entries" :: IO [BMIEntry]
-    entriesID <- query_ conn "SELECT id from entries" :: IO [BMIId]
-    let entriesWID = zip entriesID entries
+    entriesID <- query_ conn "SELECT id from entries" :: IO [Only Int]
+    let entriesWID = zip (map fromOnly entriesID) entries
     close conn
-
     mapM_ print entriesWID
-
 
 -- Invalid Choices for Menu
 badChoice :: IO f -> [Char] -> IO f -- Higher order function
