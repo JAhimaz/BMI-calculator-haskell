@@ -1,11 +1,21 @@
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE KindSignatures #-}
+
 module DB.Datatypes where
+import Control.Applicative
+import Database.SQLite.Simple
+import Database.SQLite.Simple.FromRow
+import Database.SQLite.Simple.ToField
 
-{-# LANGUAGE GADTs, TypeFamilies, TemplateHaskell, QuasiQuotes, FlexibleInstances, StandaloneDeriving #-}
-import Control.Monad.IO.Class (liftIO)
-import Database.Groundhog.TH ()
-import Database.Groundhog.Sqlite ()
 
-data BMIEntry = BMIEntry { age :: Int, fullName :: String, gender :: String, bmi :: Double, weight :: Double, height :: Double, timeTaken :: String } deriving Show
+data BMIEntry = BMIEntry Int String String Double Double Double String deriving (Show)
 
--- data BMIRecord = BMIRecord Int String String Double Double Double UTCTime
--- BMIRecord Age Name Gender BMI Weight Height 
+-- instance FromRow BMIEntry where
+--     fromRow = BMIEntry <$> field <*> field <*> field <*> field <*> field <*> field <*> field
+
+instance ToRow BMIEntry where
+  toRow (BMIEntry age name gender bmi weight height time) = toRow (age, name, gender, bmi, weight, height, time)
+
+
+-- Database initialise command (For Testing)
+-- sqlite3 bmiapp.db "CREATE TABLE entries (id INTEGER PRIMARY KEY, age INTEGER, fullName TEXT, gender TEXT, bmi DOUBLE, weight DOUBLE, height DOUBLE, time TEXT);" 

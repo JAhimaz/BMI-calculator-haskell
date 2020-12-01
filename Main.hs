@@ -1,30 +1,30 @@
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE CPP #-}
 module Main where
   
 -- Package Imports
-import Data.Maybe ()
-import Data.Char ( toUpper )
-import Data.Time.Clock ( getCurrentTime )
-import Data.Time.Calendar ()
-import Control.Concurrent ()
+import Data.Maybe 
+import Data.Char 
+import Data.Time.Clock 
+import Data.Time.Calendar 
+import Control.Concurrent
 -- Module Imports
-import Utils.MenuExtras ( clear, exitMenu )
+import Utils.MenuExtras 
 import Utils.Validation
-    ( getParameter, validString, validNumber, validGender )
-import DB.Datatypes ()
+import DB.Datatypes
 import BMICalculator
-    ( BMIRecord(BMIRecord), bmiCalc, readBMIEntry, round1dp )
 -- Database Imports
-{-# LANGUAGE GADTs, TypeFamilies, TemplateHaskell, QuasiQuotes, FlexibleInstances, StandaloneDeriving #-}
-import Control.Monad.IO.Class (liftIO)
-import Database.Groundhog.TH ()
-import Database.Groundhog.Sqlite ()
+import Control.Applicative
+import Database.SQLite.Simple
+import Database.SQLite.Simple.FromRow
 
 
 main :: IO ()
 main = setupProgram
 
 setupProgram = do
-  mainMenuRecursion
+    mainMenuRecursion
+
 
 -- Main Menu Code Prompt
 menu :: IO String
@@ -72,14 +72,22 @@ calculateBMI = do
     date <- getCurrentTime 
     let fullName = firstName ++ " " ++ lastName
     let gender = map toUpper gInput
+    let id = 1
     --
     let bmiValue = round1dp (bmiCalc (read weight) (read height))
-    let thisBMIEntry = BMIRecord (read age) fullName gender bmiValue (read weight) (read height) date
+    let thisBMIEntry = BMIRecord id (read age) fullName gender bmiValue (read weight) (read height) date
+    conn <- open "bmiapp.db"
+    execute conn "INSERT INTO entries (age, fullName, gender, bmi, weight, height, time) VALUES (?, ?, ?, ?, ?, ?, ?)" (BMIEntry (read age) fullName gender bmiValue (read weight) (read height) (show date))
+    close conn
     -- BMIRecord Age Name BMI Weight Height 
 
     -- Profile Print
     clear
     readBMIEntry thisBMIEntry
+    putStrLn "Entry Recorded. Redirected to Menu in 5 Seconds..."
+    threadDelay 5000000
+    clear
+    mainMenuRecursion
 
 -- Menu Recursions
 mainMenuRecursion :: IO ()

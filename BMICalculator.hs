@@ -6,7 +6,7 @@ import Data.Time.Calendar
 
 -- DATA TYPE DECLARATIONS
 
-data BMIRecord = BMIRecord Int String String Double Double Double UTCTime
+data BMIRecord = BMIRecord Int Int String String Double Double Double UTCTime
 -- BMIRecord Age Name Gender BMI Weight Height 
 
 data BMI = SeverelyUnderweight
@@ -50,11 +50,12 @@ bmiCalc :: Fractional a => a -> a -> a
 bmiCalc weight height = (weight / ((height/100)^2))
 
 readBMIEntry :: BMIRecord -> IO ()
-readBMIEntry (BMIRecord a n g b w h d) = do
+readBMIEntry (BMIRecord id a n g b w h d) = do
   let bmiType = bmi b
   let gender = _gender g
 
   putStrLn "╔════════════════════════════════════════════════════════════════════════════"
+  putStrLn ("║ " ++ "ID: " ++ (show id))
   putStrLn ("║ " ++ n ++ "'s BMI Profile")
   putStrLn ("║ Age: " ++ (show a))
   putStrLn ("║ Gender: " ++ gender)

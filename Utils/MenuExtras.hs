@@ -3,6 +3,7 @@ module Utils.MenuExtras where
 import Control.Concurrent
 
 -- Clears the console for visual clarity
+clear :: IO ()
 clear = putStr "\ESC[2J"
 
 -- Used to Exit the menu
