@@ -12,6 +12,7 @@ executable finalproject-fpp-cabal
     Utils.MenuExtras
     , Utils.Validation
     , BMICalculator
+    , BMIRecordsRetrieval
     , DB.Datatypes
   build-depends: 
     base ^>=4.14.1.0

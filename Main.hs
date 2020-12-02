@@ -13,6 +13,7 @@ import Utils.MenuExtras
 import Utils.Validation
 import DB.Datatypes
 import BMICalculator
+import BMIRecordsRetrieval
 -- Database Imports
 import Control.Applicative
 import Database.SQLite.Simple
@@ -46,7 +47,7 @@ menuSelection :: String -> IO ()
 menuSelection choice =
     case choice of
         "1" -> calculateBMI
-        "2" -> testRetrieve
+        "2" -> showAllReadings
         "0" -> exitMenu
         other -> badChoice mainMenuRecursion other
 
@@ -95,15 +96,34 @@ calculateBMI = do
 mainMenuRecursion :: IO ()
 mainMenuRecursion =  menu >>= menuSelection
 
--- Menu Choice 2 (Retrieving Entries & Searching)
-testRetrieve = do
+readingsMenu :: IO String
+readingsMenu = do
+    putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
+    putStrLn "║                     >>> View Previous Readings <<<                         ║"
+    putStrLn "║                                                                            ║"
+    putStrLn "║ [1] View All Readings                                                      ║"
+    putStrLn "║ [2] View Specific Readings                                                 ║"
+    putStrLn "║                                                                            ║"
+    putStrLn "║ [0] Exit                                                                   ║"
+    putStrLn "║                                                                            ║"
+    putStrLn "║             ~~~ Please ENTER one of the following choices ~~~              ║"
+    putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
+    getLine
+
+readingsMenuRecursion :: IO ()
+readingsMenuRecursion = readingsMenu >>= readingsMenuSelection
+
+readingsMenuSelection :: String -> IO ()
+readingsMenuSelection choice =
+    case choice of
+        "1" -> putStrLn "Choice 1"
+        "2" -> putStrLn "Choice 2"
+        "0" -> mainMenuRecursion
+        other -> badChoice readingsMenuRecursion other
+
+showAllReadings = do
     clear
-    conn <- open "bmiapp.db"
-    entries <- query_ conn "SELECT age, fullName, gender, bmi, weight, height, time from entries" :: IO [BMIEntry]
-    entriesID <- query_ conn "SELECT id from entries" :: IO [Only Int]
-    let entriesWID = zip (map fromOnly entriesID) entries
-    close conn
-    mapM_ print entriesWID
+    getAllEntries
 
 -- Invalid Choices for Menu
 badChoice :: IO f -> [Char] -> IO f -- Higher order function
@@ -111,6 +131,9 @@ badChoice f x = do
     clear
     putStrLn ("\n" ++ x ++ " Is Not A Valid Choice")
     f
+
+
+-- Setup Enter Key
 
 
 {-

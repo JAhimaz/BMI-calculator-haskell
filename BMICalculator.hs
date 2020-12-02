@@ -9,6 +9,16 @@ import Data.Time.Calendar
 data BMIRecord = BMIRecord Int Int String String Double Double Double UTCTime
 -- BMIRecord Age Name Gender BMI Weight Height 
 
+bmi :: (Ord a, Fractional a) => a -> BMI
+bmi n
+  | n <= 16.5 = SeverelyUnderweight
+  | n <= 18.5 = Underweight
+  | n <= 25.0 = Normal
+  | n <= 30.1 = Overweight
+  | n <= 35.0 = Obese1
+  | n <= 40.0 = Obese2
+  | otherwise = Obese3
+
 data BMI = SeverelyUnderweight
          | Underweight
          | Normal
@@ -25,16 +35,6 @@ instance Show BMI where
   show Obese1              = "Obese (Class I)"
   show Obese2              = "Obese (Class II)"
   show Obese3              = "Obese (Class III)"
-
-bmi :: (Ord a, Fractional a) => a -> BMI
-bmi n
-  | n <= 16.5 = SeverelyUnderweight
-  | n <= 18.5 = Underweight
-  | n <= 25.0 = Normal
-  | n <= 30.1 = Overweight
-  | n <= 35.0 = Obese1
-  | n <= 40.0 = Obese2
-  | otherwise = Obese3
 
 _gender :: [Char] -> [Char]
 _gender n
