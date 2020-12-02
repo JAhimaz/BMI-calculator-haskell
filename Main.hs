@@ -47,7 +47,7 @@ menuSelection :: String -> IO ()
 menuSelection choice =
     case choice of
         "1" -> calculateBMI
-        "2" -> showAllReadings
+        "2" -> readingsMenuRecursion
         "0" -> exitMenu
         other -> badChoice mainMenuRecursion other
 
@@ -94,7 +94,9 @@ calculateBMI = do
 
 -- Menu Recursions
 mainMenuRecursion :: IO ()
-mainMenuRecursion =  menu >>= menuSelection
+mainMenuRecursion =  do
+    clear
+    menu >>= menuSelection
 
 readingsMenu :: IO String
 readingsMenu = do
@@ -104,19 +106,21 @@ readingsMenu = do
     putStrLn "║ [1] View All Readings                                                      ║"
     putStrLn "║ [2] View Specific Readings                                                 ║"
     putStrLn "║                                                                            ║"
-    putStrLn "║ [0] Exit                                                                   ║"
+    putStrLn "║ [0] Back                                                                   ║"
     putStrLn "║                                                                            ║"
     putStrLn "║             ~~~ Please ENTER one of the following choices ~~~              ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
     getLine
 
 readingsMenuRecursion :: IO ()
-readingsMenuRecursion = readingsMenu >>= readingsMenuSelection
+readingsMenuRecursion = do
+    clear
+    readingsMenu >>= readingsMenuSelection
 
 readingsMenuSelection :: String -> IO ()
 readingsMenuSelection choice =
     case choice of
-        "1" -> putStrLn "Choice 1"
+        "1" -> showAllReadings
         "2" -> putStrLn "Choice 2"
         "0" -> mainMenuRecursion
         other -> badChoice readingsMenuRecursion other
@@ -124,6 +128,7 @@ readingsMenuSelection choice =
 showAllReadings = do
     clear
     getAllEntries
+    readingsMenuRecursion
 
 -- Invalid Choices for Menu
 badChoice :: IO f -> [Char] -> IO f -- Higher order function
