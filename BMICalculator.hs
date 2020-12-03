@@ -91,8 +91,8 @@ newBMIEntry = do
   lastName <- getParameter "your Last Name: " validString
   age <- getParameter "your Age: " validNumber
   gInput <- getParameter "your Gender ( M | F | O ): " validGender
-  height <- getParameter "your Height (CM):" validNumber
-  weight <- getParameter "your Weight (KG):" validNumber
+  height <- getParameter "your Height (CM):" validDouble
+  weight <- getParameter "your Weight (KG):" validDouble
   -- None Input
   date <- getCurrentTime 
   let fullName = firstName ++ " " ++ lastName

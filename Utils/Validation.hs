@@ -1,6 +1,7 @@
 module Utils.Validation where
 
 import Data.Char (isDigit, isSpace, isAlpha, isNumber)
+import Data.Ratio
 
 getParameter :: [Char] -> (String -> Bool) -> IO String
 getParameter label valid = loop
@@ -26,8 +27,9 @@ validStringSearch x = (all isAlpha x)
 validNumber :: Foldable t => t Char -> Bool
 validNumber x = all isDigit x
 
--- validDouble :: Foldable t => t Char -> Bool
--- validDouble x = all 
+validDouble x = case (reads x) :: [(Double, String)] of
+      [(_, "")] -> True
+      _         -> False
 
 validGender :: [Char] -> Bool
 validGender x

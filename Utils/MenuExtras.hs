@@ -17,6 +17,7 @@ exitMenu = do
     putStrLn "║                         PRG2214 | Sunway University                        ║"
     putStrLn "║                                                                            ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
+    threadDelay 2000000
 
 {-
 
