@@ -20,6 +20,9 @@ getParameter label valid = loop
 validString :: Foldable t => t Char -> Bool
 validString x = (all isAlpha x) && not (all isSpace x)
 
+validStringSearch :: Foldable t => t Char -> Bool
+validStringSearch x = (all isAlpha x)
+
 validNumber :: Foldable t => t Char -> Bool
 validNumber x = all isNumber x
 

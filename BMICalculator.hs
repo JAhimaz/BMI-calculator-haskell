@@ -21,7 +21,10 @@ import Database.SQLite.Simple.FromRow
 
 -- DATA TYPE DECLARATIONS
 
-data BMIRecord = BMIRecord Int Int String String Double Double Double UTCTime
+data BMIRecord = BMIRecord Int Int String String Double Double Double String
+
+instance FromRow BMIRecord where
+    fromRow = BMIRecord <$> field <*> field <*> field <*> field <*> field <*> field <*> field <*> field
 -- BMIRecord Age Name Gender BMI Weight Height 
 
 bmi :: (Ord a, Fractional a) => a -> BMI
@@ -105,7 +108,7 @@ newBMIEntry = do
   id <- query conn "SELECT id from entries WHERE time = ?" (Only (show date :: String)) :: IO [Only Int]
   close conn
 
-  let thisBMIEntry = BMIRecord (fromOnly (head id)) (read age) fullName gender bmiValue (read weight) (read height) date
+  let thisBMIEntry = BMIRecord (fromOnly (head id)) (read age) fullName gender bmiValue (read weight) (read height) (show date)
 
   -- Profile Print
   readBMIEntry thisBMIEntry

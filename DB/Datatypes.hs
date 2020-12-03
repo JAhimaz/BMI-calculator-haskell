@@ -17,6 +17,5 @@ instance ToRow BMIEntry where
   toRow (BMIEntry age name gender bmi weight height time) = toRow (age, name, gender, bmi, weight, height, time)
 
 
-
 -- Database initialise command (For Testing)
 -- sqlite3 bmiapp.db "CREATE TABLE entries (id INTEGER PRIMARY KEY, age INTEGER, fullName TEXT, gender TEXT, bmi DOUBLE, weight DOUBLE, height DOUBLE, time TEXT);" 

@@ -30,8 +30,9 @@ menu = do
     putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
     putStrLn "║                        >>> BMI Calculator App <<<                          ║"
     putStrLn "║                                                                            ║"
-    putStrLn "║ [1] Calculate BMI                                                          ║"
+    putStrLn "║ [1] Calculate BMI (New Reading)                                            ║"
     putStrLn "║ [2] View Previous Readings                                                 ║"
+    putStrLn "║ [3] View Statistics of Readings                                            ║"
     putStrLn "║                                                                            ║"
     putStrLn "║ [0] Exit                                                                   ║"
     putStrLn "║                                                                            ║"
@@ -39,12 +40,18 @@ menu = do
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
     getLine
 
+-- Menu Recursions
+mainMenuRecursion :: IO ()
+mainMenuRecursion =  do
+    menu >>= menuSelection
+
 -- Main Menu Choices
 menuSelection :: String -> IO ()
 menuSelection choice =
     case choice of
         "1" -> calculateBMI
         "2" -> readingsMenuRecursion
+        "3" -> putStrLn "Statistics"
         "0" -> exitMenu
         other -> badChoice mainMenuRecursion other
 
@@ -55,10 +62,6 @@ calculateBMI = do
     newBMIEntry
     mainMenuRecursion
 
--- Menu Recursions
-mainMenuRecursion :: IO ()
-mainMenuRecursion =  do
-    menu >>= menuSelection
 
 readingsMenu :: IO String
 readingsMenu = do
@@ -82,13 +85,44 @@ readingsMenuSelection :: String -> IO ()
 readingsMenuSelection choice =
     case choice of
         "1" -> showAllReadings
-        "2" -> putStrLn "Choice 2"
+        "2" -> specificReadingMenuRecursion
         "0" -> mainMenuRecursion
         other -> badChoice readingsMenuRecursion other
 
 showAllReadings = do
     getAllEntries
     readingsMenuRecursion
+
+showSpecificReading = do
+    putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
+    putStrLn "║                      >>> View Specific Entries <<<                         ║"
+    putStrLn "║                                                                            ║"
+    putStrLn "║  What Would You Like To Search By?                                         ║"
+    putStrLn "║                                                                            ║"
+    putStrLn "║  1) ID                                                                     ║"
+    putStrLn "║  2) Full Name                                                              ║"
+    putStrLn "║                                                                            ║"
+    putStrLn "║  0) Back                                                                   ║"
+    putStrLn "║                                                                            ║"
+    putStrLn "╚════════════════════════════════════════════════════════════════════════════╝\n"
+    getLine
+
+specificReadingMenuRecursion :: IO ()
+specificReadingMenuRecursion = do
+    showSpecificReading >>= specificReadingMenuSelection
+
+
+specificReadingMenuSelection choice =
+    case choice of
+        "1" -> do
+            getSpecifiEntry "id"
+            specificReadingMenuRecursion
+        "2" -> do
+            getSpecifiEntry "fullName"
+            specificReadingMenuRecursion
+        "0" -> readingsMenuRecursion
+        other -> badChoice specificReadingMenuRecursion other
+
 
 -- Invalid Choices for Menu
 badChoice :: IO f -> [Char] -> IO f -- Higher order function
