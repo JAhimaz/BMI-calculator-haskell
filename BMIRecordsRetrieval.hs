@@ -38,6 +38,9 @@ getSpecifiEntry col = do
         search <- getParameter "a Entry ID: " validNumber
         let param = read search
         entries <- query conn "SELECT * FROM entries WHERE id = ?" (Only (param :: Int)) :: IO [BMIRecord]
-        readBMIEntry (head entries)
+        if (length entries) == 0
+            then putStrLn ("No Entries Found With ID " ++ search)
+        else readBMIEntry (head entries)
+
         
     close conn
