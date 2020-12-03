@@ -109,7 +109,6 @@ newBMIEntry = do
 
   -- Profile Print
   readBMIEntry thisBMIEntry
-  putStrLn "Entry Recorded. Press ANY Key To Return To The Menu"
   anyKeyContinue
 
 {-
