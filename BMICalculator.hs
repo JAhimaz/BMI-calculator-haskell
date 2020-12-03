@@ -6,6 +6,7 @@ module BMICalculator where
 -- Module Imports
 import Utils.MenuExtras 
 import Utils.Validation
+import Utils.Misc
 import DB.Datatypes
 -- Package Imports
 import Data.Maybe 
@@ -108,8 +109,8 @@ newBMIEntry = do
 
   -- Profile Print
   readBMIEntry thisBMIEntry
-  putStrLn "Entry Recorded. Redirected to Menu in 5 Seconds..."
-  threadDelay 5000000
+  putStrLn "Entry Recorded. Press ANY Key To Return To The Menu"
+  anyKeyContinue
 
 {-
 

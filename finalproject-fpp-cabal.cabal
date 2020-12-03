@@ -11,6 +11,7 @@ executable finalproject-fpp-cabal
   other-modules: 
     Utils.MenuExtras
     , Utils.Validation
+    , Utils.Misc
     , BMICalculator
     , BMIRecordsRetrieval
     , DB.Datatypes
