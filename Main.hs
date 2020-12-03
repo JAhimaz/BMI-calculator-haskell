@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE CPP #-}
 module Main where
   
 -- Package Imports
@@ -14,15 +12,25 @@ import Utils.Validation
 import DB.Datatypes
 import BMICalculator
 import BMIRecordsRetrieval
-
+-- Database Imports
+-- Package Imports
+import Control.Applicative
+import Database.SQLite.Simple
+import Database.SQLite.Simple.FromRow
+import Database.SQLite.Simple.ToField
 
 
 main :: IO ()
 main = setupProgram
 
 setupProgram = do
+    setupDatabase
     mainMenuRecursion
 
+setupDatabase = do
+    conn <- open "bmiapp.db"
+    execute_ conn "CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY, age INTEGER, fullName TEXT, gender TEXT, bmi DOUBLE, weight DOUBLE, height DOUBLE, time TEXT)"
+    close conn
 
 -- Main Menu Code Prompt
 menu :: IO String

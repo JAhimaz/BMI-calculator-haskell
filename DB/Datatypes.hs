@@ -1,6 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE KindSignatures #-}
-
 module DB.Datatypes where
 import Control.Applicative
 import Database.SQLite.Simple

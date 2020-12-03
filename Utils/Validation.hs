@@ -24,7 +24,10 @@ validStringSearch :: Foldable t => t Char -> Bool
 validStringSearch x = (all isAlpha x)
 
 validNumber :: Foldable t => t Char -> Bool
-validNumber x = all isNumber x
+validNumber x = all isDigit x
+
+-- validDouble :: Foldable t => t Char -> Bool
+-- validDouble x = all 
 
 validGender :: [Char] -> Bool
 validGender x

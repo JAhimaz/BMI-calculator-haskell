@@ -1,6 +1,6 @@
 module Utils.Misc where
 
-import System.IO
+import System.IO ( stdin, hSetBuffering, BufferMode(NoBuffering) )
 
 anyKeyContinue :: IO ()
 anyKeyContinue = do

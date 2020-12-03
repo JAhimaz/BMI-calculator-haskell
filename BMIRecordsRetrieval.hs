@@ -1,11 +1,9 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE KindSignatures #-}
-
 module BMIRecordsRetrieval where
 
 -- Module Imports
 import BMICalculator
 import Utils.Validation
+import Utils.Misc
 import DB.Datatypes
 -- Package Imports
 import Control.Applicative
@@ -25,6 +23,7 @@ getAllEntries = do
     putStrLn "══════════════════════════════════════════════════════════════════════════════════════════════╗"
     mapM_ print entriesWID
     putStrLn "══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
+    anyKeyContinue
 
 getSpecifiEntry col = do
     conn <- open "bmiapp.db"
@@ -41,6 +40,5 @@ getSpecifiEntry col = do
         if (length entries) == 0
             then putStrLn ("No Entries Found With ID " ++ search)
         else readBMIEntry (head entries)
-
-        
     close conn
+    anyKeyContinue
