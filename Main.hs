@@ -94,6 +94,9 @@ readingsMenuSelection choice =
         "2" -> do 
                 getSpecificEntry
                 readingsMenuRecursion
+        "3" -> do 
+                removeSpecificEntry
+                readingsMenuRecursion
         "0" -> mainMenuRecursion
         other -> badChoice readingsMenuRecursion other
 

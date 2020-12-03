@@ -27,8 +27,22 @@ getSpecificEntry = do
     search <- getParameter "a Entry ID (Can Be Found By Viewing All): " validNumber
     let param = read search
     entries <- query conn "SELECT * FROM entries WHERE id = ?" (Only (param :: Int)) :: IO [BMIRecord]
-    if (length entries) == 0
-        then putStrLn ("No Entries Found With ID " ++ search)
-    else readBMIEntry (head entries)
+    if (length entries) > 0
+        then readBMIEntry (head entries)
+    else putStrLn ("No Entries Found With ID " ++ search)
+    close conn
+    anyKeyContinue
+
+removeSpecificEntry = do
+    conn <- open "bmiapp.db"
+    search <- getParameter "a Entry ID To Delete (Can Be Found By Viewing All): " validNumber
+    let param = read search
+    entries <- query conn "SELECT * FROM entries WHERE id = ?" (Only (param :: Int)) :: IO [BMIRecord]
+    if (length entries) > 0
+        then do
+            execute conn "DELETE FROM entries WHERE id = ?" (Only (param :: Int))
+            putStrLn ("\nDeleted The Following Entry: ")
+            mapM_ readBMIEntryMin entries
+    else putStrLn ("No Entries Found With ID " ++ search)
     close conn
     anyKeyContinue
