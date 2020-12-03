@@ -83,6 +83,12 @@ readBMIEntry (BMIRecord id a n g b w h d) = do
   putStrLn ("║ Time of Reading: " ++ (show d))                                                                        
   putStrLn "╚════════════════════════════════════════════════════════════════════════════\n\n\n"
 
+readBMIEntryMin :: BMIRecord -> IO ()
+readBMIEntryMin (BMIRecord id a n g b _ _ d) = do
+  let bmiType = bmi b
+  let gender = _gender g
+  putStrLn ("║ " ++ "ID: " ++ (show id) ++ " | Name: " ++ n ++ " | Age: " ++ (show a) ++ " | Gender: " ++ gender ++ "\n║ BMI: " ++ (show b) ++ " | BMI Type: " ++ (show bmiType) ++ " | Date Taken: " ++ (show d))
+
 newBMIEntry = do
   putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
   putStrLn "║                       >>> Calculate BMI (METRIC) <<<                       ║"

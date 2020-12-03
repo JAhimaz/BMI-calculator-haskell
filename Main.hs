@@ -13,7 +13,6 @@ import DB.Datatypes
 import BMICalculator
 import BMIRecordsRetrieval
 -- Database Imports
--- Package Imports
 import Control.Applicative
 import Database.SQLite.Simple
 import Database.SQLite.Simple.FromRow
@@ -40,7 +39,6 @@ menu = do
     putStrLn "║                                                                            ║"
     putStrLn "║ [1] Calculate BMI (New Reading)                                            ║"
     putStrLn "║ [2] View Previous Readings                                                 ║"
-    putStrLn "║ [3] View Statistics of Readings                                            ║"
     putStrLn "║                                                                            ║"
     putStrLn "║ [0] Exit                                                                   ║"
     putStrLn "║                                                                            ║"
@@ -59,7 +57,6 @@ menuSelection choice =
     case choice of
         "1" -> calculateBMI
         "2" -> readingsMenuRecursion
-        "3" -> putStrLn "Statistics"
         "0" -> exitMenu
         other -> badChoice mainMenuRecursion other
 
@@ -78,6 +75,7 @@ readingsMenu = do
     putStrLn "║                                                                            ║"
     putStrLn "║ [1] View All Readings                                                      ║"
     putStrLn "║ [2] View Specific Readings                                                 ║"
+    putStrLn "║ [3] Remove Specific Readings                                               ║"
     putStrLn "║                                                                            ║"
     putStrLn "║ [0] Back                                                                   ║"
     putStrLn "║                                                                            ║"
@@ -93,7 +91,9 @@ readingsMenuSelection :: String -> IO ()
 readingsMenuSelection choice =
     case choice of
         "1" -> showAllReadings
-        "2" -> specificReadingMenuRecursion
+        "2" -> do 
+                getSpecificEntry
+                readingsMenuRecursion
         "0" -> mainMenuRecursion
         other -> badChoice readingsMenuRecursion other
 
@@ -101,46 +101,12 @@ showAllReadings = do
     getAllEntries
     readingsMenuRecursion
 
-showSpecificReading = do
-    putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
-    putStrLn "║                      >>> View Specific Entries <<<                         ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║  What Would You Like To Search By?                                         ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║  1) ID                                                                     ║"
-    putStrLn "║  2) Full Name                                                              ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║  0) Back                                                                   ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "╚════════════════════════════════════════════════════════════════════════════╝\n"
-    getLine
-
-specificReadingMenuRecursion :: IO ()
-specificReadingMenuRecursion = do
-    showSpecificReading >>= specificReadingMenuSelection
-
-
-specificReadingMenuSelection choice =
-    case choice of
-        "1" -> do
-            getSpecifiEntry "id"
-            specificReadingMenuRecursion
-        "2" -> do
-            getSpecifiEntry "fullName"
-            specificReadingMenuRecursion
-        "0" -> readingsMenuRecursion
-        other -> badChoice specificReadingMenuRecursion other
-
 
 -- Invalid Choices for Menu
 badChoice :: IO f -> [Char] -> IO f -- Higher order function
 badChoice f x = do
     putStrLn ("\n" ++ x ++ " Is Not A Valid Choice")
     f
-
-
--- Setup Enter Key
-
 
 {-
 

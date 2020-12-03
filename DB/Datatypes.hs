@@ -7,9 +7,6 @@ import Database.SQLite.Simple.ToField
 
 data BMIEntry = BMIEntry Int String String Double Double Double String deriving (Show)
 
-instance FromRow BMIEntry where
-    fromRow = BMIEntry <$> field <*> field <*> field <*> field <*> field <*> field <*> field
-
 instance ToRow BMIEntry where
   toRow (BMIEntry age name gender bmi weight height time) = toRow (age, name, gender, bmi, weight, height, time)
 
