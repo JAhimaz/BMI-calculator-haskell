@@ -1,12 +1,10 @@
 module Utils.MenuExtras where
 
-import Control.Concurrent
+import Utils.Misc
 
 -- Used to Exit the menu
-exitMenu :: IO ()
-exitMenu = do
-    putStrLn "Exiting Program..."
-    threadDelay 2000000
+appInfo :: IO ()
+appInfo = do
     putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
     putStrLn "║                                                                            ║"
     putStrLn "║                  ~~ THANKS FOR USING THE BMI CALCULATOR ~~                 ║"
@@ -17,7 +15,27 @@ exitMenu = do
     putStrLn "║                         PRG2214 | Sunway University                        ║"
     putStrLn "║                                                                            ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
-    threadDelay 2000000
+    anyKeyContinue
+
+displayBMIGuide :: IO ()
+displayBMIGuide = do
+    putStrLn "╔═════════════════════════════════════════════════════╗"
+    putStrLn "║                  BMI RANGES & TYPES                 ║"
+    putStrLn "╠═════════════════════════════════════════════════════╣"
+    putStrLn "║                                                     ║"
+    putStrLn "║           < 16.5 - Severely Underweight             ║"
+    putStrLn "║      16.5 – 18.5 - Underweight                      ║"
+    putStrLn "║      18.5 - 24.9 - Normal                           ║"
+    putStrLn "║      25.0 - 29.9 - Overweight                       ║"
+    putStrLn "║      30.0 - 34.9 - Obese (Class I)                  ║"
+    putStrLn "║      35.0 - 39.9 - Obese (Class II)                 ║"
+    putStrLn "║           > 40.0 - Obese (Class III)                ║"
+    putStrLn "║                                                     ║"
+    putStrLn "╚═════════════════════════════════════════════════════╝"
+    anyKeyContinue
+
+
+
 
 {-
 

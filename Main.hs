@@ -29,6 +29,9 @@ setupProgram = do
 setupDatabase = do
     conn <- open "bmiapp.db"
     execute_ conn "CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY, age INTEGER, fullName TEXT, gender TEXT, bmi DOUBLE, weight DOUBLE, height DOUBLE, time TEXT)"
+    entries <- query_ conn "SELECT * FROM entries" :: IO [BMIRecord]
+    let countEntries = length entries
+    putStrLn ("\n\nLoaded " ++ (show countEntries) ++ " Entries\n\n")
     close conn
 
 -- Main Menu Code Prompt
@@ -39,6 +42,8 @@ menu = do
     putStrLn "║                                                                            ║"
     putStrLn "║ [1] Calculate BMI (New Reading)                                            ║"
     putStrLn "║ [2] View Previous Readings                                                 ║"
+    putStrLn "║ [3] BMI Guide                                                              ║"
+    putStrLn "║ [4] Application Info                                                       ║"
     putStrLn "║                                                                            ║"
     putStrLn "║ [0] Exit                                                                   ║"
     putStrLn "║                                                                            ║"
@@ -57,7 +62,15 @@ menuSelection choice =
     case choice of
         "1" -> calculateBMI
         "2" -> readingsMenuRecursion
-        "0" -> exitMenu
+        "3" -> do
+            displayBMIGuide
+            mainMenuRecursion
+        "4" -> do
+            appInfo
+            mainMenuRecursion
+        "0" -> do
+                putStrLn "Exiting Program..."
+                threadDelay 2000000
         other -> badChoice mainMenuRecursion other
 
 -- BMI Menu Code Prompt

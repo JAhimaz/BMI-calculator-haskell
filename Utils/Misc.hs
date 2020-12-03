@@ -8,3 +8,9 @@ anyKeyContinue = do
     hSetBuffering stdin NoBuffering
     _ <- getChar
     putStrLn "\n"
+
+{- 
+    ASCII Characters for Menu Creation
+    
+    ═ 	║ 	╒ 	╓ 	╔ 	╕ 	╖ 	╗ 	╘ 	╙ 	╚ 	╛ 	╜ 	╝ 	╞ 	╟	╠ 	╡ 	╢ 	╣ 	╤ 	╥ 	╦ 	╧ 	╨ 	╩ 	╪ 	╫ 	╬
+-}
