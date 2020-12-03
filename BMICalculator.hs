@@ -1,8 +1,22 @@
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE CPP #-}
+
 module BMICalculator where
 
-import Data.Maybe
-import Data.Time.Clock
-import Data.Time.Calendar
+-- Module Imports
+import Utils.MenuExtras 
+import Utils.Validation
+import DB.Datatypes
+-- Package Imports
+import Data.Maybe 
+import Data.Char 
+import Data.Time.Clock 
+import Data.Time.Calendar 
+import Control.Concurrent
+-- Database Imports
+import Control.Applicative
+import Database.SQLite.Simple
+import Database.SQLite.Simple.FromRow
 
 -- DATA TYPE DECLARATIONS
 
@@ -68,8 +82,34 @@ readBMIEntry (BMIRecord id a n g b w h d) = do
   putStrLn ("║ Time of Reading: " ++ (show d))                                                                        
   putStrLn "╚════════════════════════════════════════════════════════════════════════════\n\n\n"
 
+newBMIEntry = do
+  putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
+  putStrLn "║                       >>> Calculate BMI (METRIC) <<<                       ║"
+  putStrLn "╚════════════════════════════════════════════════════════════════════════════╝\n"
+  firstName <- getParameter "your First Name: " validString
+  lastName <- getParameter "your Last Name: " validString
+  age <- getParameter "your Age: " validNumber
+  gInput <- getParameter "your Gender ( M | F | O ): " validGender
+  height <- getParameter "your Height (CM):" validNumber
+  weight <- getParameter "your Weight (KG):" validNumber
+  -- None Input
+  date <- getCurrentTime 
+  let fullName = firstName ++ " " ++ lastName
+  let gender = map toUpper gInput
+  --
+  let bmiValue = round1dp (bmiCalc (read weight) (read height))
 
+  conn <- open "bmiapp.db"
+  execute conn "INSERT INTO entries (age, fullName, gender, bmi, weight, height, time) VALUES (?, ?, ?, ?, ?, ?, ?)" (BMIEntry (read age) fullName gender bmiValue (read weight) (read height) (show date))
+  id <- query conn "SELECT id from entries WHERE time = ?" (Only (show date :: String)) :: IO [Only Int]
+  close conn
 
+  let thisBMIEntry = BMIRecord (fromOnly (head id)) (read age) fullName gender bmiValue (read weight) (read height) date
+
+  -- Profile Print
+  readBMIEntry thisBMIEntry
+  putStrLn "Entry Recorded. Redirected to Menu in 5 Seconds..."
+  threadDelay 5000000
 
 {-
 

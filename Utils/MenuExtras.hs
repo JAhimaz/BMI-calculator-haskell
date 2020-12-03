@@ -2,17 +2,11 @@ module Utils.MenuExtras where
 
 import Control.Concurrent
 
--- Clears the console for visual clarity
-clear :: IO ()
-clear = putStr "\ESC[2J"
-
 -- Used to Exit the menu
 exitMenu :: IO ()
 exitMenu = do
-    clear
     putStrLn "Exiting Program..."
     threadDelay 2000000
-    clear
     putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
     putStrLn "║                                                                            ║"
     putStrLn "║                  ~~ THANKS FOR USING THE BMI CALCULATOR ~~                 ║"

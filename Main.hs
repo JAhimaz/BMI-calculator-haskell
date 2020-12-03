@@ -14,10 +14,7 @@ import Utils.Validation
 import DB.Datatypes
 import BMICalculator
 import BMIRecordsRetrieval
--- Database Imports
-import Control.Applicative
-import Database.SQLite.Simple
-import Database.SQLite.Simple.FromRow
+
 
 
 main :: IO ()
@@ -55,47 +52,12 @@ menuSelection choice =
 
 calculateBMI :: IO ()
 calculateBMI = do
-    putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
-    putStrLn "║                       >>> Calculate BMI (METRIC) <<<                       ║"
-    putStrLn "╚════════════════════════════════════════════════════════════════════════════╝\n"
-    clear
-    firstName <- getParameter "your First Name: " validString
-    clear
-    lastName <- getParameter "your Last Name: " validString
-    clear
-    age <- getParameter "your Age: " validNumber
-    clear
-    gInput <- getParameter "your Gender ( M | F | O ): " validGender
-    clear
-    height <- getParameter "your Height (CM):" validNumber
-    clear
-    weight <- getParameter "your Weight (KG):" validNumber
-    -- None Input
-    date <- getCurrentTime 
-    let fullName = firstName ++ " " ++ lastName
-    let gender = map toUpper gInput
-    --
-    let bmiValue = round1dp (bmiCalc (read weight) (read height))
-
-    conn <- open "bmiapp.db"
-    execute conn "INSERT INTO entries (age, fullName, gender, bmi, weight, height, time) VALUES (?, ?, ?, ?, ?, ?, ?)" (BMIEntry (read age) fullName gender bmiValue (read weight) (read height) (show date))
-    id <- query conn "SELECT id from entries WHERE time = ?" (Only (show date :: String)) :: IO [Only Int]
-    close conn
-
-    let thisBMIEntry = BMIRecord (fromOnly (head id)) (read age) fullName gender bmiValue (read weight) (read height) date
-
-    -- Profile Print
-    clear
-    readBMIEntry thisBMIEntry
-    putStrLn "Entry Recorded. Redirected to Menu in 5 Seconds..."
-    threadDelay 5000000
-    clear
+    newBMIEntry
     mainMenuRecursion
 
 -- Menu Recursions
 mainMenuRecursion :: IO ()
 mainMenuRecursion =  do
-    clear
     menu >>= menuSelection
 
 readingsMenu :: IO String
@@ -114,7 +76,6 @@ readingsMenu = do
 
 readingsMenuRecursion :: IO ()
 readingsMenuRecursion = do
-    clear
     readingsMenu >>= readingsMenuSelection
 
 readingsMenuSelection :: String -> IO ()
@@ -126,14 +87,12 @@ readingsMenuSelection choice =
         other -> badChoice readingsMenuRecursion other
 
 showAllReadings = do
-    clear
     getAllEntries
     readingsMenuRecursion
 
 -- Invalid Choices for Menu
 badChoice :: IO f -> [Char] -> IO f -- Higher order function
 badChoice f x = do
-    clear
     putStrLn ("\n" ++ x ++ " Is Not A Valid Choice")
     f
 

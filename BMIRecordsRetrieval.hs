@@ -11,6 +11,7 @@ import Database.SQLite.Simple.ToField
 import BMICalculator
 import DB.Datatypes
 
+
 getAllEntries = do
     conn <- open "bmiapp.db"
     entries <- query_ conn "SELECT age, fullName, gender, bmi, weight, height, time from entries" :: IO [BMIEntry]
