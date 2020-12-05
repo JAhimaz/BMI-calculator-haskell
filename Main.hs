@@ -3,7 +3,7 @@ module Main where
 -- Package Imports
 import Control.Concurrent ( threadDelay )
 -- Module Imports
-import Utils.MenuExtras ( appInfo, displayBMIGuide ) 
+import Utils.MenuExtras
 import DB.Datatypes ( BMIRecord )
 import BMICalculator ( newBMIEntry )
 import BMIRecordsRetrieval
@@ -29,40 +29,19 @@ setupDatabase = do
     execute_ conn "CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY, age INTEGER, fullName TEXT, gender TEXT, bmi DOUBLE, weight DOUBLE, height DOUBLE, time TEXT)"
     entries <- query_ conn "SELECT * FROM entries" :: IO [BMIRecord]
     let countEntries = length entries
-    putStrLn ("\n\nLoaded " ++ (show countEntries) ++ " Entries\n\n")
+    putStrLn ("\n\nLoaded " ++ show countEntries ++ " Entries\n\n")
     close conn
 
 -- Main Menu Code Prompt
 menu :: IO String
 menu = do
-    putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
-    putStrLn "║                        >>> BMI Calculator App <<<                          ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║ [1] Calculate BMI (New Reading)                                            ║"
-    putStrLn "║ [2] View Previous Readings                                                 ║"
-    putStrLn "║ [3] BMI Guide                                                              ║"
-    putStrLn "║ [4] Application Info                                                       ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║ [0] Exit                                                                   ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║             ~~~ Please ENTER one of the following choices ~~~              ║"
-    putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
+    mainMenuPrompt
     getLine
 
 -- Readings Menu
 readingsMenu :: IO String
 readingsMenu = do
-    putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
-    putStrLn "║                     >>> View Previous Readings <<<                         ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║ [1] View All Readings                                                      ║"
-    putStrLn "║ [2] View Specific Readings                                                 ║"
-    putStrLn "║ [3] Remove Specific Readings                                               ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║ [0] Back                                                                   ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║             ~~~ Please ENTER one of the following choices ~~~              ║"
-    putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
+    previousReadingsPrompt
     getLine
 
 -- Menu Recursions
