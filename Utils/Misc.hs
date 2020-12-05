@@ -2,6 +2,7 @@ module Utils.Misc where
 
 import System.IO ( stdin, hSetBuffering, BufferMode(NoBuffering) )
 
+-- Simple Enter to Continue Function for menu astethics
 anyKeyContinue :: IO ()
 anyKeyContinue = do
     putStrLn "\nPress ENTER Key To Continue..."

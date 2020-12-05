@@ -1,31 +1,29 @@
 module Main where
   
 -- Package Imports
-import Data.Maybe 
-import Data.Char 
-import Data.Time.Clock 
-import Data.Time.Calendar 
-import Control.Concurrent
+import Control.Concurrent ( threadDelay )
 -- Module Imports
-import Utils.MenuExtras 
-import Utils.Validation
-import DB.Datatypes
-import BMICalculator
+import Utils.MenuExtras ( appInfo, displayBMIGuide ) 
+import DB.Datatypes ( BMIRecord )
+import BMICalculator ( newBMIEntry )
 import BMIRecordsRetrieval
+    ( getAllEntries, getSpecificEntry, removeSpecificEntry )
 -- Database Imports
-import Control.Applicative
-import Database.SQLite.Simple
-import Database.SQLite.Simple.FromRow
-import Database.SQLite.Simple.ToField
+import Database.SQLite.Simple ( close, execute_, open, query_ )
 
-
+-- The main runs the setup program function
 main :: IO ()
 main = setupProgram
 
+-- setupProgram first sets up the database then continues on to the main menu.
+setupProgram :: IO ()
 setupProgram = do
     setupDatabase
     mainMenuRecursion
 
+{- setupDatabase creates the database and table `entries` if it doesn't exist already and prints the number of
+current entries within the database -}
+setupDatabase :: IO ()
 setupDatabase = do
     conn <- open "bmiapp.db"
     execute_ conn "CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY, age INTEGER, fullName TEXT, gender TEXT, bmi DOUBLE, weight DOUBLE, height DOUBLE, time TEXT)"
@@ -51,10 +49,30 @@ menu = do
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
     getLine
 
+-- Readings Menu
+readingsMenu :: IO String
+readingsMenu = do
+    putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
+    putStrLn "║                     >>> View Previous Readings <<<                         ║"
+    putStrLn "║                                                                            ║"
+    putStrLn "║ [1] View All Readings                                                      ║"
+    putStrLn "║ [2] View Specific Readings                                                 ║"
+    putStrLn "║ [3] Remove Specific Readings                                               ║"
+    putStrLn "║                                                                            ║"
+    putStrLn "║ [0] Back                                                                   ║"
+    putStrLn "║                                                                            ║"
+    putStrLn "║             ~~~ Please ENTER one of the following choices ~~~              ║"
+    putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
+    getLine
+
 -- Menu Recursions
 mainMenuRecursion :: IO ()
 mainMenuRecursion =  do
     menu >>= menuSelection
+
+readingsMenuRecursion :: IO ()
+readingsMenuRecursion = do
+    readingsMenu >>= readingsMenuSelection
 
 -- Main Menu Choices
 menuSelection :: String -> IO ()
@@ -73,33 +91,6 @@ menuSelection choice =
                 threadDelay 2000000
         other -> badChoice mainMenuRecursion other
 
--- BMI Menu Code Prompt
-
-calculateBMI :: IO ()
-calculateBMI = do
-    newBMIEntry
-    mainMenuRecursion
-
-
-readingsMenu :: IO String
-readingsMenu = do
-    putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
-    putStrLn "║                     >>> View Previous Readings <<<                         ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║ [1] View All Readings                                                      ║"
-    putStrLn "║ [2] View Specific Readings                                                 ║"
-    putStrLn "║ [3] Remove Specific Readings                                               ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║ [0] Back                                                                   ║"
-    putStrLn "║                                                                            ║"
-    putStrLn "║             ~~~ Please ENTER one of the following choices ~~~              ║"
-    putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
-    getLine
-
-readingsMenuRecursion :: IO ()
-readingsMenuRecursion = do
-    readingsMenu >>= readingsMenuSelection
-
 readingsMenuSelection :: String -> IO ()
 readingsMenuSelection choice =
     case choice of
@@ -113,16 +104,22 @@ readingsMenuSelection choice =
         "0" -> mainMenuRecursion
         other -> badChoice readingsMenuRecursion other
 
+-- Calculate BMI
+calculateBMI :: IO ()
+calculateBMI = do
+    newBMIEntry
+    mainMenuRecursion
+
+-- Show all readings
 showAllReadings = do
     getAllEntries
     readingsMenuRecursion
 
-
 -- Invalid Choices for Menu
-badChoice :: IO f -> [Char] -> IO f -- Higher order function
+badChoice :: IO f -> [Char] -> IO f -- Badchoice takes in a function and a String [Char]
 badChoice f x = do
-    putStrLn ("\n" ++ x ++ " Is Not A Valid Choice")
-    f
+    putStrLn ("\n" ++ x ++ " Is Not A Valid Choice") -- It will print the invalid choice
+    f -- And go to a provided recursion function (AKA returning to the menu)
 
 {-
 

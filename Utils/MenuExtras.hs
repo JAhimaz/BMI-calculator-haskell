@@ -1,6 +1,13 @@
 module Utils.MenuExtras where
 
-import Utils.Misc
+-- Module Imports
+import Utils.Misc ( anyKeyContinue )
+
+{-
+
+    MenuExtras.hs just contains printables for Display.
+
+-}
 
 -- Used to Exit the menu
 appInfo :: IO ()
@@ -33,8 +40,6 @@ displayBMIGuide = do
     putStrLn "║                                                     ║"
     putStrLn "╚═════════════════════════════════════════════════════╝"
     anyKeyContinue
-
-
 
 
 {-

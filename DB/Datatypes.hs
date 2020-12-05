@@ -1,8 +1,6 @@
 module DB.Datatypes where
-import Control.Applicative
-import Database.SQLite.Simple
-import Database.SQLite.Simple.FromRow
-import Database.SQLite.Simple.ToField
+  
+import Database.SQLite.Simple ( field, FromRow(..), ToRow(..) )
 
 data BMIEntry = BMIEntry Int String String Double Double Double String deriving (Show)
 
