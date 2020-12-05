@@ -1,10 +1,10 @@
 module BMIRecordsRetrieval where
 
 -- Module Imports
-import Utils.Validation
-import Utils.Misc
-import DB.Datatypes
--- Package Imports
+import Utils.Validation ( getParameter, validNumber )
+import Utils.Misc ( enterKeyContinue )
+import DB.Datatypes ( _gender, bmi, BMIRecord(..) )
+-- Database Imports
 import Database.SQLite.Simple
     ( close, execute, open, query, query_, Only(Only) )
 
