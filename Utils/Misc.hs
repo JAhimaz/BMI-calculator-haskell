@@ -6,9 +6,12 @@ import System.IO ( stdin, hSetBuffering, BufferMode(NoBuffering) )
 enterKeyContinue :: IO ()
 enterKeyContinue = do
     putStrLn "\nPress ENTER Key To Continue..."
-    hSetBuffering stdin NoBuffering
-    _ <- getChar
+    _ <- getLine
     putStrLn "\n"
+    -- putStrLn "\nPress ENTER Key To Continue..."
+    -- hSetBuffering stdin NoBuffering
+    -- _ <- getChar
+    -- putStrLn "\n"
 
 {- 
     ASCII Characters for Menu Creation

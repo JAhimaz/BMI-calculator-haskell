@@ -24,6 +24,7 @@ mainMenuPrompt = do
     putStrLn "║             ~~~ Please ENTER one of the following choices ~~~              ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
 
+previousReadingsPrompt :: IO ()
 previousReadingsPrompt = do
     putStrLn "╔════════════════════════════════════════════════════════════════════════════╗"
     putStrLn "║                     >>> View Previous Readings <<<                         ║"
@@ -59,11 +60,11 @@ displayBMIGuide = do
     putStrLn "╠═════════════════════════════════════════════════════╣"
     putStrLn "║                                                     ║"
     putStrLn "║           < 16.5 - Severely Underweight             ║"
-    putStrLn "║      16.5 – 18.5 - Underweight                      ║"
-    putStrLn "║      18.5 - 24.9 - Normal                           ║"
-    putStrLn "║      25.0 - 29.9 - Overweight                       ║"
-    putStrLn "║      30.0 - 34.9 - Obese (Class I)                  ║"
-    putStrLn "║      35.0 - 39.9 - Obese (Class II)                 ║"
+    putStrLn "║      16.5 -> 18.5 - Underweight                     ║"
+    putStrLn "║      18.5 -> 24.9 - Normal                          ║"
+    putStrLn "║      25.0 -> 29.9 - Overweight                      ║"
+    putStrLn "║      30.0 -> 34.9 - Obese (Class I)                 ║"
+    putStrLn "║      35.0 -> 39.9 - Obese (Class II)                ║"
     putStrLn "║           > 40.0 - Obese (Class III)                ║"
     putStrLn "║                                                     ║"
     putStrLn "╚═════════════════════════════════════════════════════╝"

@@ -4,6 +4,10 @@ module Main where
 import Control.Concurrent ( threadDelay )
 -- Module Imports
 import Utils.MenuExtras
+    ( appInfo,
+      displayBMIGuide,
+      mainMenuPrompt,
+      previousReadingsPrompt )
 import DB.Datatypes ( BMIRecord )
 import BMICalculator ( newBMIEntry )
 import BMIRecordsRetrieval
