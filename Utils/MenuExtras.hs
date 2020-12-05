@@ -1,7 +1,7 @@
 module Utils.MenuExtras where
 
 -- Module Imports
-import Utils.Misc ( anyKeyContinue )
+import Utils.Misc ( enterKeyContinue )
 
 {-
 
@@ -22,7 +22,7 @@ appInfo = do
     putStrLn "║                         PRG2214 | Sunway University                        ║"
     putStrLn "║                                                                            ║"
     putStrLn "╚════════════════════════════════════════════════════════════════════════════╝"
-    anyKeyContinue
+    enterKeyContinue
 
 displayBMIGuide :: IO ()
 displayBMIGuide = do
@@ -39,7 +39,7 @@ displayBMIGuide = do
     putStrLn "║           > 40.0 - Obese (Class III)                ║"
     putStrLn "║                                                     ║"
     putStrLn "╚═════════════════════════════════════════════════════╝"
-    anyKeyContinue
+    enterKeyContinue
 
 
 {-

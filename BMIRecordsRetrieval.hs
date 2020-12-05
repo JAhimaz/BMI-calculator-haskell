@@ -18,7 +18,7 @@ getAllEntries = do
     putStrLn "╔══════════════════════════════════════════════════════════════════════════════════════════════╗"
     mapM_ readBMIEntryMin entries
     putStrLn "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
-    anyKeyContinue
+    enterKeyContinue
 
 getSpecificEntry :: IO ()
 getSpecificEntry = do
@@ -30,7 +30,7 @@ getSpecificEntry = do
         then readBMIEntry (head entries)
     else putStrLn ("No Entries Found With ID " ++ search)
     close conn
-    anyKeyContinue
+    enterKeyContinue
 
 readBMIEntry :: BMIRecord -> IO ()
 readBMIEntry (BMIRecord id a n g b w h d) = do
@@ -70,4 +70,4 @@ removeSpecificEntry = do
             mapM_ readBMIEntryMin entries
     else putStrLn ("No Entries Found With ID " ++ search)
     close conn
-    anyKeyContinue
+    enterKeyContinue

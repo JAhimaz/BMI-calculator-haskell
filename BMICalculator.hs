@@ -7,7 +7,7 @@ import Utils.Validation
       validNumber,
       validGender,
       validDouble )
-import Utils.Misc ( anyKeyContinue )
+import Utils.Misc ( enterKeyContinue )
 import DB.Datatypes ( BMIEntry(BMIEntry), BMIRecord(BMIRecord) )
 import BMIRecordsRetrieval ( readBMIEntry )
 -- Package Imports
@@ -48,11 +48,11 @@ newBMIEntry = do
   entry <- query conn "SELECT * FROM entries WHERE time = ?" (Only (show date :: String)) :: IO [BMIRecord]
   close conn
 
-  let thisBMIEntry = head entry
+  let thisBMIRecord = head entry
 
   -- Profile Print
-  readBMIEntry thisBMIEntry
-  anyKeyContinue
+  readBMIEntry thisBMIRecord
+  enterKeyContinue
 
 {-
 
