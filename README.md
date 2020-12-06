@@ -1,5 +1,10 @@
 # Final Project - Functional Programming Principles - PRG2214
 
+Download the [Latest Build](https://github.com/JAhimaz/BMI-calculator-haskell/releases/tag/0.1.5.0)
+
+1) Extract
+2) Run `finalproject-fpp-cabal.exe`
+
 ## How To Install/Run (Lecturer Reference)
 
 Within the file structure run the command `cabal repl`, this is equivalent to `stack ghci`. **Do Not Run `stack ghci` as it might break files**
