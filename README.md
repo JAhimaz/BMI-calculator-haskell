@@ -1,6 +1,6 @@
 # Final Project - Functional Programming Principles - PRG2214
 
-Download the [Latest Build](https://github.com/JAhimaz/BMI-calculator-haskell/releases/tag/0.1.5.0)
+Download the [Latest Build](https://github.com/JAhimaz/BMI-calculator-haskell/releases/download/0.1.5.1/BMI-Calculator-Haskell.zip)
 
 1) Extract
 2) Run `finalproject-fpp-cabal.exe`
