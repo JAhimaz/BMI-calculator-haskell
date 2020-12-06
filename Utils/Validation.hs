@@ -22,7 +22,7 @@ validString x = all isAlpha x && not (all isSpace x)
 
 -- validNumber checks if provided is numbers only
 validNumber :: Foldable t => t Char -> Bool
-validNumber x = all isDigit && not (all isSpace x)
+validNumber x = (all isDigit x) && not (all isSpace x)
 
 -- validDouble checks if `x` is a double by using reads
 validDouble :: String -> Bool
